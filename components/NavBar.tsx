@@ -8,13 +8,13 @@ const NavBar = () => {
   const { user, loadingUser } = useAuth();
 
   return (
-    <>
+    <div className="bg-black">
       <nav className="px-8 py-5">
         <ul className="w-full max-w-6xl flex flex-row items-center justify-between mx-auto">
           <Link href={"/"}>
             <li className="flex flex-row gap-2 items-center justify-center">
               <Logo width="40px" height="40px" />
-              <h1 className="text-3xl">Accounty</h1>
+              <h1 className="text-3xl text-darkwhite">Accounty</h1>
             </li>
           </Link>
           <li>
@@ -52,7 +52,7 @@ const NavBar = () => {
           </li>
         </ul>
       </nav>
-    </>
+    </div>
   );
 };
 
