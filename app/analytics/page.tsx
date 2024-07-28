@@ -20,7 +20,7 @@ const AnalyticsPage = () => {
     const fetchLogs = async () => {
       try {
         const { data } = await axios.get<Log[]>('/api/logs', {
-          params: { user_id: 'USER_ID' } // Replace with actual user ID
+          params: { user_id: 'da6ff89c-e102-4176-bf9e-69df81fadde1' } // Replace with actual user ID
         });
         setLogs(data);
       } catch (error) {
