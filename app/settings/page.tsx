@@ -38,7 +38,6 @@ const Settings = () => {
           {!!user ? "Sign Out" : "Sign In"}
         </button>
 
-        {!!user && <p>{user.email}</p>}
       </Container>
     </>
   );

@@ -24,7 +24,6 @@ export default function Home() {
     <>
       <Container>
         {loadingUser ? <h1>loading...</h1> : <h1>User: {user?.email}</h1>}
-        
       </Container>
     </>
   );
