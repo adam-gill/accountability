@@ -1,14 +1,48 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { format, addDays } from 'date-fns';
+import axios from 'axios';
+import { supabase } from '@/lib/supabase';
+import { useAuth } from '@/lib/supabase/useAuth';
+
+type Task = {
+    category: string;
+    hours: number;
+    minutes: number;
+    logged_at: string;
+  };
 
 const InputPage: React.FC = () => {
+  const { user, loadingUser } = useAuth();
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [tasks, setTasks] = useState<{ name: string; hours: number; minutes: number }[]>([]);
+  const [tasks, setTasks] = useState<{ category: string; hours: number; minutes: number }[]>([]);
   const [newTaskName, setNewTaskName] = useState("");
   const [newTaskHours, setNewTaskHours] = useState(0);
   const [newTaskMinutes, setNewTaskMinutes] = useState(0);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!loadingUser && user) {
+      fetchTasks();
+    }
+  }, [currentDate, user, loadingUser]);
+
+  const fetchTasks = async () => {
+    const formattedDate = format(currentDate, 'yyyy-MM-dd');
+    const { data, error } = await supabase
+      .from('userlogs')
+      .select('*')
+      .eq('user_id', user?.id)
+      .eq('logged_at', formattedDate);
+
+    if (error) {
+      console.error('Error fetching tasks:', error.message);
+      setError('Failed to load tasks');
+    } else {
+      setTasks(data || []);
+    }
+  };
 
   const handlePrevDay = () => {
     setCurrentDate(addDays(currentDate, -1));
@@ -18,14 +52,44 @@ const InputPage: React.FC = () => {
     setCurrentDate(addDays(currentDate, 1));
   };
 
-  const handleAddTask = () => {
+  const handleAddTask = async () => {
     if (newTaskName && (newTaskHours > 0 || newTaskMinutes > 0)) {
-      setTasks([...tasks, { name: newTaskName, hours: newTaskHours, minutes: newTaskMinutes }]);
-      setNewTaskName("");
-      setNewTaskHours(0);
-      setNewTaskMinutes(0);
-    }
+        const task = {
+          category: newTaskName,
+          hours: newTaskHours,
+          minutes: newTaskMinutes,
+          logged_at: format(currentDate, 'yyyy-MM-dd'),
+          user_id: user?.id,
+        };
+  
+        if (!user?.id) {
+          setError('User is not authenticated.');
+          return;
+        }
+  
+        const { data, error } = await supabase
+          .from('userlogs')
+          .insert([task]);
+  
+        if (error) {
+          console.error('Error inserting task:', error.message);
+          setError('Failed to add task');
+        } else {
+          setTasks([...tasks, task]);
+          setNewTaskName("");
+          setNewTaskHours(0);
+          setNewTaskMinutes(0);
+        }
+      }
   };
+
+  if (loadingUser) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user) {
+    return <div>Please log in to view and manage your tasks.</div>;
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-lightblack text-white">
@@ -41,7 +105,7 @@ const InputPage: React.FC = () => {
         {tasks.map((task, index) => (
           <div key={index} className="mb-4 py-8 px-4 border text-lg border-light_gray rounded-lg">
             <div className="flex justify-between">
-              <span>{task.name}</span>
+              <span>{task.category}</span>
               <span>{`${task.hours}h ${task.minutes}m`}</span>
             </div>
           </div>

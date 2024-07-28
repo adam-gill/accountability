@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const { data, error } = await supabase
-      .from('logs')
+      .from('userlogs')
       .select('*')
       .eq('user_id', user_id)
       .gte('logged_at', new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString());

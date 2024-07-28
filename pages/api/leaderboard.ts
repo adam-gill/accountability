@@ -4,7 +4,7 @@ import { supabase } from '../../lib/supabaseClient';
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { data, error } = await supabase
-      .from('leaderboard')
+      .from('userleaderboard')
       .select('*');
 
     if (error) {
