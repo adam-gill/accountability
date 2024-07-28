@@ -11,7 +11,6 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [loading, setLoading] = useState<boolean>(false);
-  // const [user, setUser] = useState<User | null>(null)
   const { user, loadingUser } = useAuth();
   console.log(user);
 
@@ -21,32 +20,11 @@ export default function Home() {
     if (error) console.log(error);
   };
 
-  // useEffect(() => {
-  //   const getUser = async () => {
-  //     setLoading(true)
-  //     const { data: { user } } = await supabase.auth.getUser()
-  //     setUser(user)
-  //     setLoading(false)
-  //   }
-
-  //   getUser()
-  // }, [])
-
   return (
     <>
       <Container>
         {loadingUser ? <h1>loading...</h1> : <h1>User: {user?.email}</h1>}
-        <button
-          className="bg-appGreen rounded-xl py-1 px-4 text-black text-xl border-2 border-appGreen
-                          transition-all duration-300 ease-in-out
-                          hover:scale-105 hover:brightness-90 hover:bg-inherit hover:text-appGreen
-                          active:scale-90 active:bg-[#2bfccf20]
-                          sm:text-base
-            "
-          onClick={() => signOut()}
-        >
-          Sign out
-        </button>
+        
       </Container>
     </>
   );

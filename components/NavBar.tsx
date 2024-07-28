@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Logo from "./svg/Logo";
 import { useAuth } from "@/lib/supabase/useAuth";
+import Image from "next/image";
 
 const NavBar = () => {
   const { user, loadingUser } = useAuth();
@@ -29,7 +30,11 @@ const NavBar = () => {
                           sm:text-base
             "
                   >
-                    {!!user.email ? user.email.charAt(0).toUpperCase() : ""}
+                    {!!user.user_metadata.avatar_url ? (
+                      <Image src={user.user_metadata.avatar_url} height={40} width={40} alt="user avatar" className="rounded-full"></Image>
+                    ) : (
+                      <p>{user.email?.charAt(0).toUpperCase()}</p>
+                    )}
                   </button>
                 </Link>
               </>
