@@ -13,7 +13,7 @@ type LeaderboardEntry = {
 
 const Table: React.FC<TableProps> = ({ data }) => {
   return (
-    <div className="justify-center relative container my-4 px-12 lg:px-8 sm:px-2">
+    <div className="flex justify-center relative container my-4 px-12 lg:px-8 sm:px-2">
       <div className="shadow-[0_0_2px_rgba(50,69,107,0.4)] rounded-lg overflow-hidden bg-white">
         <table className="w-full table-auto">
           <TableHeader />
