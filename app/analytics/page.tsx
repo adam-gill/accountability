@@ -38,6 +38,12 @@ const AnalyticsPage = () => {
     fetchLogs();
   }, [user, loadingUser]);
 
+  if (!user) {
+    return <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-black px-4">
+        <h1 className="text-3xl font-bold mb-4 text-red-500">Please log in to view analytics.</h1>
+        </div>;
+  }
+
   const getColor = (index: number) => {
     const colors = [
       'rgba(75, 192, 192, 1)',
@@ -112,3 +118,5 @@ const AnalyticsPage = () => {
 };
 
 export default AnalyticsPage;
+
+
