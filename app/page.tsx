@@ -33,9 +33,9 @@ export default function Home() {
   // }, [])
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen bg-lightblack">
       <Container>
-        {loadingUser ? <h1>loading...</h1> : <h1>User: {user?.email}</h1>}
+        {loadingUser ? <h1>loading...</h1> : <h1 className="text-darkwhite">User: {user?.email}</h1>}
         <button
           className="bg-appGreen rounded-xl py-1 px-4 text-black text-xl border-2 border-appGreen
                           transition-all duration-300 ease-in-out
@@ -48,6 +48,6 @@ export default function Home() {
           Sign out
         </button>
       </Container>
-    </>
+    </div>
   );
 }
