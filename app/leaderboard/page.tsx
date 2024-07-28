@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Table from '../../components/Leaderboard/Table';
 import TopCard from '@/components/Leaderboard/TopCard';
+import { useAuth } from "@/lib/supabase/useAuth";
 
 type LeaderboardEntry = {
   user_id: string;
@@ -11,21 +12,37 @@ type LeaderboardEntry = {
 };
 
 export default function LeaderboardPage() {
+  const { user, loadingUser } = useAuth()
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchLeaderboard = async () => {
-      try {
-        const { data } = await axios.get<LeaderboardEntry[]>('/api/leaderboard');
-        setLeaderboard(data);
-      } catch (error) {
-        setError('Failed to load leaderboard');
-      }
+      if (user) {
+        try {
+            const { data } = await axios.get<LeaderboardEntry[]>('/api/leaderboard');
+            setLeaderboard(data);
+          } catch (error) {
+            setError('Failed to load leaderboard');
+          }
+        } else if (!loadingUser) {
+            setError('User not authenticated');
+        }
+
     };
 
     fetchLeaderboard();
-  }, []);
+  }, [user, loadingUser]);
+
+  if (loadingUser) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user) {
+    return <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-black px-4">
+        <h1 className="text-3xl font-bold mb-4 text-red-500">Please log in to view the leaderboard.</h1>
+        </div>;
+  }
 
   const top3 = leaderboard.slice(0, 3);
 
