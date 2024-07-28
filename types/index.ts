@@ -1,5 +1,5 @@
-export interface TableDataType {
-    user_name: string;
-    total_points: number;
-    rank: number;
-  }
+// export interface TableDataType {
+//     user_name: string;
+//     total_hours: number;
+//     rank: number;
+//   }

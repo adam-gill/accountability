@@ -2,22 +2,22 @@
     "data": [
       {
         "user_name": "Ahnaf",
-        "total_points": 150,
+        "total_hours": 150,
         "rank": 1
       },
       {
         "user_name": "Waleed",
-        "total_points": 120,
+        "total_hours": 120,
         "rank": 2
       },
       {
         "user_name": "Adam",
-        "total_points": 100,
+        "total_hours": 100,
         "rank": 3
       },
       {
         "user_name": "Daniel",
-        "total_points": 50,
+        "total_hours": 50,
         "rank": 4
       }
     ]
