@@ -1,0 +1,24 @@
+{
+    "data": [
+      {
+        "user_name": "Ahnaf",
+        "total_hours": 150,
+        "rank": 1
+      },
+      {
+        "user_name": "Waleed",
+        "total_hours": 120,
+        "rank": 2
+      },
+      {
+        "user_name": "Adam",
+        "total_hours": 100,
+        "rank": 3
+      },
+      {
+        "user_name": "Daniel",
+        "total_hours": 50,
+        "rank": 4
+      }
+    ]
+}
