@@ -13,6 +13,7 @@ const NavBar = () => {
             </li>
           </Link>
           <li>
+            <Link href={"/signin"}>
             <button
               className="bg-appGreen rounded-xl py-1 px-4 text-black text-xl border-2 border-appGreen
                           transition-all duration-300 ease-in-out
@@ -23,6 +24,7 @@ const NavBar = () => {
             >
               Sign In
             </button>
+            </Link>
           </li>
         </ul>
       </nav>
