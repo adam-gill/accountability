@@ -10,7 +10,7 @@ type TopCardProps = {
 const TopCard: React.FC<TopCardProps> = ({ user_id, total_hours, index }) => {
 
   return (
-    <div className="relative p-4 w-full flex items-center justify-center align-center flex-col bg-lightblack shadow-[0_0_4px_rgba(50,69,107,0.2)] rounded-lg w-1/3 z-[1] overflow-hidden">
+    <div className="relative p-4 w-full flex items-center justify-center align-center flex-col bg-lightblack shadow-[0_0_4px_rgba(50,69,107,0.2)] rounded-lg z-[1] overflow-hidden">
 
       <div className="m-auto w-full flex justify-center align-center flex-col bg-lightblack rounded-[6px]">
         <h2 className="mt-2.5 mb-0 mx-auto text-4xl font-medium font-codefont text-appGreen text-center tracking-[0.8px]">

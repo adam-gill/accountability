@@ -30,7 +30,7 @@ export default function LeaderboardPage() {
   const top3 = leaderboard.slice(0, 3);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-black">
+    <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-black px-4">
       <h1 className="text-3xl font-bold mb-4 text-appGreen">Leaderboard</h1>
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <div className="flex space-x-4 w-full justify-center">
