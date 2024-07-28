@@ -4,14 +4,18 @@ import { User } from '@supabase/supabase-js'
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>()
+  const [loadingUser, setLoadingUser] = useState<boolean>(false)
 
-  useEffect(() => {
+  useEffect(() => { 
+    setLoadingUser(true)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null)
+      
     })
 
+    setLoadingUser(false)
     return () => subscription.unsubscribe()
   }, [])
 
-  return user
+  return { user, loadingUser }
 }
