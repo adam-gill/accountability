@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
+import { supabase } from '@/lib/supabase';
+import { useAuth } from "@/lib/supabase/useAuth";
 
 type Log = {
   user_id: string;
@@ -13,23 +15,35 @@ type Log = {
 };
 
 const AnalyticsPage = () => {
+  const { user, loadingUser } = useAuth()
   const [logs, setLogs] = useState<Log[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchLogs = async () => {
-      try {
-        const { data } = await axios.get<Log[]>('/api/logs', {
-          params: { user_id: 'da6ff89c-e102-4176-bf9e-69df81fadde1' } // Replace with actual user ID
-        });
-        setLogs(data);
-      } catch (error) {
-        setError(error.response?.data?.error || 'Failed to load logs');
+    console.log('loadingUser:', loadingUser);
+    console.log('user:', !!user);
+    if (loadingUser) {
+        // Still loading user, do not fetch logs yet
+        return;
+    }
+
+    if (user) {
+        const user_id = user.id;
+        try {
+          const { data } = await axios.get<Log[]>(`/api/logs?user_id=${user_id}`);
+          setLogs(data);
+        } catch (error) {
+          setError('Failed to load logs');
+        }
       }
+    if (!!!user && !loadingUser) {
+        setError('User not authenticated')
+    }
     };
 
     fetchLogs();
-  }, []);
+  }, [user, loadingUser]);
 
   const processData = () => {
     const categories = Array.from(new Set(logs.map(log => log.category)));
