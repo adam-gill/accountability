@@ -51,7 +51,7 @@ const InputPage: React.FC = () => {
       {/* Add Task Button */}
       <div className="fixed bottom-20 right-4">
         <button
-          className="bg-prim_accent text-almost_black rounded-full h-12 w-12 flex items-center justify-center text-2xl shadow-lg"
+          className="bg-appGreen text-black rounded-full h-12 w-12 flex items-center justify-center text-2xl shadow-lg"
           onClick={() => document.getElementById("addTaskForm")?.classList.toggle("hidden")}
         >
           +
