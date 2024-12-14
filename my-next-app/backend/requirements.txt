@@ -1,0 +1,4 @@
+fastapi
+pydantic
+llama_index
+uvicorn
